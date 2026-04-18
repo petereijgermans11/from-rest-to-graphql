@@ -1,0 +1,18 @@
+flowchart LR
+  FE[Angular + Apollo]
+  BE[spring-graphql]
+  SCH[Schema]
+  RES[Resolver]
+  DATA[Service / Repo / DB]
+
+  FE -->|query/mutation: graphql| BE
+  FE -->|subscription: graphql| BE
+  BE --> SCH
+  BE --> RES
+  BE --> DATA
+
+  classDef dim fill:#2a2a3e,stroke:#666,color:#aaa;
+  classDef hi fill:#6db33f,stroke:#9be36b,color:#0b1a0b,font-weight:bold;
+
+  class BE,SCH,RES hi;
+  class FE,DATA dim;

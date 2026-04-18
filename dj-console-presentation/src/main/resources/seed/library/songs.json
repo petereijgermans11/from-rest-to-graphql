@@ -1,0 +1,494 @@
+[
+  {
+    "id": {
+      "value": "a56c3e47-fcb9-508e-a177-26fd36b78a4c"
+    },
+    "artist": {
+      "id": {
+        "value": "048091b3-0da4-5e72-947b-48008ae44b04"
+      },
+      "name": "Marco Schuitmaker"
+    },
+    "title": "Engelbewaarder"
+  },
+  {
+    "id": {
+      "value": "5c33f8a0-eee5-517c-ab28-bd002ac9fb75"
+    },
+    "artist": {
+      "id": {
+        "value": "048091b3-0da4-5e72-947b-48008ae44b04"
+      },
+      "name": "Marco Schuitmaker"
+    },
+    "title": "Van Goes Tot Purmerend"
+  },
+  {
+    "id": {
+      "value": "f3e09c81-73e7-527b-93fa-a279d0924a92"
+    },
+    "artist": {
+      "id": {
+        "value": "048091b3-0da4-5e72-947b-48008ae44b04"
+      },
+      "name": "Marco Schuitmaker"
+    },
+    "title": "Zomernacht in Griekenland"
+  },
+  {
+    "id": {
+      "value": "8dfd5eab-077a-59ef-be9f-2ac06179d0a2"
+    },
+    "artist": {
+      "id": {
+        "value": "afe2d04d-0f56-5e56-81fa-e103a31e57b2"
+      },
+      "name": "Madonna"
+    },
+    "title": "Like a Virgin"
+  },
+  {
+    "id": {
+      "value": "92e64e9d-d92e-5c4d-bb09-1dcfca9ad70c"
+    },
+    "artist": {
+      "id": {
+        "value": "afe2d04d-0f56-5e56-81fa-e103a31e57b2"
+      },
+      "name": "Madonna"
+    },
+    "title": "Material Girl"
+  },
+  {
+    "id": {
+      "value": "8a0a3b32-c8c8-5797-94e1-825290f2ee76"
+    },
+    "artist": {
+      "id": {
+        "value": "afe2d04d-0f56-5e56-81fa-e103a31e57b2"
+      },
+      "name": "Madonna"
+    },
+    "title": "Papa Don’t Preach"
+  },
+  {
+    "id": {
+      "value": "ec5ac456-fc8f-570f-b195-dbadbf0daa7d"
+    },
+    "artist": {
+      "id": {
+        "value": "afe2d04d-0f56-5e56-81fa-e103a31e57b2"
+      },
+      "name": "Madonna"
+    },
+    "title": "Like a Prayer"
+  },
+  {
+    "id": {
+      "value": "098f075c-a4e5-5020-a228-66990d9bf396"
+    },
+    "artist": {
+      "id": {
+        "value": "afe2d04d-0f56-5e56-81fa-e103a31e57b2"
+      },
+      "name": "Madonna"
+    },
+    "title": "Vogue"
+  },
+  {
+    "id": {
+      "value": "992cca3e-923b-52d9-ad11-db65652ca965"
+    },
+    "artist": {
+      "id": {
+        "value": "afe2d04d-0f56-5e56-81fa-e103a31e57b2"
+      },
+      "name": "Madonna"
+    },
+    "title": "Express Yourself"
+  },
+  {
+    "id": {
+      "value": "0ed8635a-3e7e-523d-bbb4-d24940a70aa7"
+    },
+    "artist": {
+      "id": {
+        "value": "afe2d04d-0f56-5e56-81fa-e103a31e57b2"
+      },
+      "name": "Madonna"
+    },
+    "title": "Holiday"
+  },
+  {
+    "id": {
+      "value": "d5afa617-b298-5205-a967-0c2366acf7b7"
+    },
+    "artist": {
+      "id": {
+        "value": "afe2d04d-0f56-5e56-81fa-e103a31e57b2"
+      },
+      "name": "Madonna"
+    },
+    "title": "Borderline"
+  },
+  {
+    "id": {
+      "value": "e1ce84d4-1484-5543-bd7a-ad3dc13f5f60"
+    },
+    "artist": {
+      "id": {
+        "value": "afe2d04d-0f56-5e56-81fa-e103a31e57b2"
+      },
+      "name": "Madonna"
+    },
+    "title": "Into the Groove"
+  },
+  {
+    "id": {
+      "value": "363bdb34-6f37-5435-88d1-11fab746e474"
+    },
+    "artist": {
+      "id": {
+        "value": "afe2d04d-0f56-5e56-81fa-e103a31e57b2"
+      },
+      "name": "Madonna"
+    },
+    "title": "La Isla Bonita"
+  },
+  {
+    "id": {
+      "value": "7a2ca204-099a-5f5e-aba3-a333254736b6"
+    },
+    "artist": {
+      "id": {
+        "value": "f9e30ed7-8ef4-5ff4-9ae6-d3d85546077a"
+      },
+      "name": "Avicii"
+    },
+    "title": "Wake Me Up"
+  },
+  {
+    "id": {
+      "value": "115bd89c-89ba-51de-b1cc-e3025b2be151"
+    },
+    "artist": {
+      "id": {
+        "value": "f9e30ed7-8ef4-5ff4-9ae6-d3d85546077a"
+      },
+      "name": "Avicii"
+    },
+    "title": "Hey Brother"
+  },
+  {
+    "id": {
+      "value": "aeec6936-17fe-561c-988f-347151f9f125"
+    },
+    "artist": {
+      "id": {
+        "value": "f9e30ed7-8ef4-5ff4-9ae6-d3d85546077a"
+      },
+      "name": "Avicii"
+    },
+    "title": "Levels"
+  },
+  {
+    "id": {
+      "value": "fdda0b47-878d-557b-9903-da9f18bc084f"
+    },
+    "artist": {
+      "id": {
+        "value": "f9e30ed7-8ef4-5ff4-9ae6-d3d85546077a"
+      },
+      "name": "Avicii"
+    },
+    "title": "Waiting for Love"
+  },
+  {
+    "id": {
+      "value": "60b1327c-a48f-58c6-bff8-c8cecac18581"
+    },
+    "artist": {
+      "id": {
+        "value": "f9e30ed7-8ef4-5ff4-9ae6-d3d85546077a"
+      },
+      "name": "Avicii"
+    },
+    "title": "You Make Me"
+  },
+  {
+    "id": {
+      "value": "2996748e-7d7c-5651-8e9a-6675bfc9c3b5"
+    },
+    "artist": {
+      "id": {
+        "value": "f9e30ed7-8ef4-5ff4-9ae6-d3d85546077a"
+      },
+      "name": "Avicii"
+    },
+    "title": "Addicted to You"
+  },
+  {
+    "id": {
+      "value": "031c471a-9e48-50cd-bb3b-ccafd40217b8"
+    },
+    "artist": {
+      "id": {
+        "value": "f9e30ed7-8ef4-5ff4-9ae6-d3d85546077a"
+      },
+      "name": "Avicii"
+    },
+    "title": "I Could Be the One"
+  },
+  {
+    "id": {
+      "value": "ecfab382-1af9-54a9-8683-d1bc9e336577"
+    },
+    "artist": {
+      "id": {
+        "value": "f9e30ed7-8ef4-5ff4-9ae6-d3d85546077a"
+      },
+      "name": "Avicii"
+    },
+    "title": "The Days"
+  },
+  {
+    "id": {
+      "value": "e1fd7c96-b502-550a-8875-f31202df143d"
+    },
+    "artist": {
+      "id": {
+        "value": "f9e30ed7-8ef4-5ff4-9ae6-d3d85546077a"
+      },
+      "name": "Avicii"
+    },
+    "title": "The Nights"
+  },
+  {
+    "id": {
+      "value": "a01c0ac1-812c-5df8-aa1a-25fee3ee7c71"
+    },
+    "artist": {
+      "id": {
+        "value": "f9e30ed7-8ef4-5ff4-9ae6-d3d85546077a"
+      },
+      "name": "Avicii"
+    },
+    "title": "Without You"
+  },
+  {
+    "id": {
+      "value": "3a794cdc-23bb-5db3-9008-9fd94a0ee88a"
+    },
+    "artist": {
+      "id": {
+        "value": "094544d6-859e-5679-a66e-c14d3fc72439"
+      },
+      "name": "Martin Garrix"
+    },
+    "title": "In the Name of Love"
+  },
+  {
+    "id": {
+      "value": "1ed6b8cc-62ca-5782-87d5-221ce30a30c9"
+    },
+    "artist": {
+      "id": {
+        "value": "094544d6-859e-5679-a66e-c14d3fc72439"
+      },
+      "name": "Martin Garrix"
+    },
+    "title": "Scared to Be Lonely"
+  },
+  {
+    "id": {
+      "value": "fe1e9c24-ca3d-5847-9748-4de0c217cb30"
+    },
+    "artist": {
+      "id": {
+        "value": "094544d6-859e-5679-a66e-c14d3fc72439"
+      },
+      "name": "Martin Garrix"
+    },
+    "title": "Animals"
+  },
+  {
+    "id": {
+      "value": "55cfa0cd-c029-5efe-99ea-30daeeaf8e65"
+    },
+    "artist": {
+      "id": {
+        "value": "094544d6-859e-5679-a66e-c14d3fc72439"
+      },
+      "name": "Martin Garrix"
+    },
+    "title": "High On Life"
+  },
+  {
+    "id": {
+      "value": "1a6ca336-9a57-509f-b9b6-3bbb5b440fe9"
+    },
+    "artist": {
+      "id": {
+        "value": "094544d6-859e-5679-a66e-c14d3fc72439"
+      },
+      "name": "Martin Garrix"
+    },
+    "title": "Summer Days"
+  },
+  {
+    "id": {
+      "value": "2eeb0a1e-4d44-5f20-870e-9dc4c8e31db5"
+    },
+    "artist": {
+      "id": {
+        "value": "094544d6-859e-5679-a66e-c14d3fc72439"
+      },
+      "name": "Martin Garrix"
+    },
+    "title": "Virus"
+  },
+  {
+    "id": {
+      "value": "29d25b7a-c8cb-511a-a808-b04fe4c0b939"
+    },
+    "artist": {
+      "id": {
+        "value": "094544d6-859e-5679-a66e-c14d3fc72439"
+      },
+      "name": "Martin Garrix"
+    },
+    "title": "Forbidden Voices"
+  },
+  {
+    "id": {
+      "value": "c5f54c96-e5a3-5053-b52b-9359da6b0a43"
+    },
+    "artist": {
+      "id": {
+        "value": "094544d6-859e-5679-a66e-c14d3fc72439"
+      },
+      "name": "Martin Garrix"
+    },
+    "title": "The Only Way Is Up"
+  },
+  {
+    "id": {
+      "value": "d943469e-2fe6-5a52-9a5e-9b22380df424"
+    },
+    "artist": {
+      "id": {
+        "value": "411e7140-fe88-51ea-9742-f9a613b1f766"
+      },
+      "name": "Golden Earring"
+    },
+    "title": "Radar Love"
+  },
+  {
+    "id": {
+      "value": "89249260-1b45-507a-88f6-78ed43ec956e"
+    },
+    "artist": {
+      "id": {
+        "value": "411e7140-fe88-51ea-9742-f9a613b1f766"
+      },
+      "name": "Golden Earring"
+    },
+    "title": "Twilight Zone"
+  },
+  {
+    "id": {
+      "value": "a1af70de-d065-507b-9d7f-23ea33a4fd6b"
+    },
+    "artist": {
+      "id": {
+        "value": "411e7140-fe88-51ea-9742-f9a613b1f766"
+      },
+      "name": "Golden Earring"
+    },
+    "title": "When the Lady Smiles"
+  },
+  {
+    "id": {
+      "value": "f8e59c8e-aec7-5cab-95c6-2e1e1bbb947d"
+    },
+    "artist": {
+      "id": {
+        "value": "411e7140-fe88-51ea-9742-f9a613b1f766"
+      },
+      "name": "Golden Earring"
+    },
+    "title": "She Flies on Strange Wings"
+  },
+  {
+    "id": {
+      "value": "e7101b46-eef0-5dbc-93d2-48f900d4a7b2"
+    },
+    "artist": {
+      "id": {
+        "value": "411e7140-fe88-51ea-9742-f9a613b1f766"
+      },
+      "name": "Golden Earring"
+    },
+    "title": "Back Home"
+  },
+  {
+    "id": {
+      "value": "302786f7-0da0-516e-90bc-8be46cf035a2"
+    },
+    "artist": {
+      "id": {
+        "value": "411e7140-fe88-51ea-9742-f9a613b1f766"
+      },
+      "name": "Golden Earring"
+    },
+    "title": "Going to the Run"
+  },
+  {
+    "id": {
+      "value": "46c69a8f-e77d-54a5-b21b-c23a11188bff"
+    },
+    "artist": {
+      "id": {
+        "value": "411e7140-fe88-51ea-9742-f9a613b1f766"
+      },
+      "name": "Golden Earring"
+    },
+    "title": "Long Blond Animal"
+  },
+  {
+    "id": {
+      "value": "8528e1d3-4ee5-565f-bdb1-1614e848a20d"
+    },
+    "artist": {
+      "id": {
+        "value": "411e7140-fe88-51ea-9742-f9a613b1f766"
+      },
+      "name": "Golden Earring"
+    },
+    "title": "Just a Little Bit of Peace in My Heart"
+  },
+  {
+    "id": {
+      "value": "10692056-d359-5568-b5e6-afc2a3018477"
+    },
+    "artist": {
+      "id": {
+        "value": "411e7140-fe88-51ea-9742-f9a613b1f766"
+      },
+      "name": "Golden Earring"
+    },
+    "title": "Another 45 Miles"
+  },
+  {
+    "id": {
+      "value": "b871cc37-78c6-5187-b3f7-f24b33f6704d"
+    },
+    "artist": {
+      "id": {
+        "value": "411e7140-fe88-51ea-9742-f9a613b1f766"
+      },
+      "name": "Golden Earring"
+    },
+    "title": "Sleepwalkin’"
+  }
+]

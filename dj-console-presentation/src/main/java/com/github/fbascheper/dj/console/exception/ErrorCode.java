@@ -1,0 +1,23 @@
+package com.github.fbascheper.dj.console.exception;
+
+import lombok.Getter;
+
+@Getter
+public enum ErrorCode {
+
+    DOMAIN_VALIDATION_ERROR("DOMAIN_VALIDATION_ERROR"),
+    MIX_SESSION_NOT_ACTIVE("MIX_SESSION_NOT_ACTIVE"),
+    MIX_SESSION_NOT_FOUND("MIX_SESSION_NOT_FOUND"),
+    MIX_SESSION_ALREADY_EXISTS("MIX_SESSION_ALREADY_EXISTS"),
+    MIX_SESSION_ALREADY_STARTED("MIX_SESSION_ALREADY_STARTED"),
+    MIX_SESSION_ALREADY_ENDED("MIX_SESSION_ALREADY_ENDED"),
+    TRACK_NOT_FOUND("TRACK_NOT_FOUND"),
+    TRACK_ALREADY_IN_QUEUE("TRACK_ALREADY_IN_QUEUE");
+
+    private final String code;
+
+    ErrorCode(String code) {
+        this.code = code;
+    }
+
+}

@@ -1,0 +1,215 @@
+:host {
+  display: block;
+}
+
+.spotlight {
+  --border: #a78bfa;
+  --bg: rgba(167, 139, 250, 0.06);
+  --text: #f4efe6;
+  --muted: #9a9488;
+
+  position: relative;
+  border: 3px dashed var(--border);
+  border-radius: 16px;
+  padding: 2.5rem 1.5rem 2rem;
+  margin: 2rem 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'DM Sans', system-ui, sans-serif;
+}
+
+.spotlight__badge {
+  position: absolute;
+  top: -14px;
+  left: 24px;
+  background: var(--border);
+  color: #1a1025;
+  padding: 3px 14px;
+  border-radius: 6px;
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.spotlight__badge-hint {
+  font-weight: 500;
+  text-transform: none;
+  letter-spacing: 0.02em;
+  margin-left: 0.5em;
+}
+
+.spotlight__card {
+  border-radius: 12px;
+  padding: 1.1rem 1.15rem;
+  background: rgba(0, 0, 0, 0.22);
+  border: 1px solid rgba(255, 245, 230, 0.1);
+}
+
+.spotlight__card--rest {
+  border-color: rgba(251, 191, 36, 0.35);
+}
+
+.spotlight__card--rest-first {
+  margin-bottom: 1.75rem;
+}
+
+.spotlight__thesis {
+  margin: 0 0 1.5rem;
+  padding: 1rem 1.25rem;
+  border-left: 4px solid var(--border);
+  background: rgba(167, 139, 250, 0.1);
+  border-radius: 0 10px 10px 0;
+}
+
+.spotlight__thesis p {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+.spotlight__queries {
+  display: grid;
+  gap: 1.25rem;
+  margin-bottom: 1.5rem;
+}
+
+@media (min-width: 960px) {
+  .spotlight__queries {
+    grid-template-columns: 1fr 1fr;
+    align-items: start;
+  }
+}
+
+.spotlight__query-block {
+  margin: 0;
+}
+
+.spotlight__h {
+  margin: 0 0 0.65rem;
+  font-size: 0.95rem;
+  font-weight: 800;
+}
+
+.spotlight__list {
+  margin: 0 0 1rem;
+  padding-left: 1.15rem;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: var(--muted);
+}
+
+.spotlight__list code {
+  font-size: 0.82em;
+}
+
+.spotlight__muted {
+  margin: 0 0 0.75rem;
+  font-size: 0.85rem;
+  color: var(--muted);
+  line-height: 1.45;
+}
+
+.spotlight__card--compare {
+  border-color: rgba(167, 139, 250, 0.35);
+  margin-bottom: 0;
+}
+
+.spotlight__table-wrap {
+  overflow-x: auto;
+  margin: 0 -0.25rem;
+  padding: 0 0.25rem;
+}
+
+.spotlight__table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.78rem;
+}
+
+.spotlight__table th,
+.spotlight__table td {
+  border: 1px solid rgba(255, 245, 230, 0.08);
+  padding: 0.45rem 0.5rem;
+  vertical-align: top;
+  text-align: left;
+}
+
+.spotlight__table thead th {
+  color: var(--border);
+  font-weight: 700;
+}
+
+.spotlight__table--compare tbody th[scope='row'] {
+  color: #e9d5ff;
+  font-weight: 600;
+}
+
+.spotlight__table--compare td {
+  color: var(--muted);
+}
+
+.spotlight__table code {
+  font-size: 0.85em;
+  word-break: break-word;
+}
+
+.spotlight__rest-fetch {
+  margin-top: 0.5rem;
+}
+
+.spotlight__bytes {
+  font-size: 0.85rem;
+  margin: 0 0 0.5rem;
+}
+
+.spotlight__bytes strong {
+  color: #fbbf24;
+}
+
+.spotlight__pre {
+  margin: 0 0 0.75rem;
+  padding: 0.75rem;
+  max-height: 220px;
+  overflow: auto;
+  border-radius: 8px;
+  background: rgba(0, 0, 0, 0.45);
+  font-family: 'IBM Plex Mono', ui-monospace, monospace;
+  font-size: 0.65rem;
+  line-height: 1.4;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.spotlight__pre--rest-json {
+  max-height: 280px;
+}
+
+.spotlight__pre--graphql {
+  max-height: 320px;
+  font-size: 0.68rem;
+}
+
+.spotlight__err {
+  color: #fb7185;
+  font-size: 0.85rem;
+  margin: 0 0 0.5rem;
+}
+
+.spotlight__retry {
+  appearance: none;
+  cursor: pointer;
+  font: inherit;
+  padding: 0.45rem 1rem;
+  border-radius: 8px;
+  border: 1px solid rgba(167, 139, 250, 0.5);
+  background: rgba(167, 139, 250, 0.12);
+  color: #e9d5ff;
+  font-weight: 700;
+  font-size: 0.8rem;
+}
+
+.spotlight__retry:hover {
+  background: rgba(167, 139, 250, 0.22);
+}

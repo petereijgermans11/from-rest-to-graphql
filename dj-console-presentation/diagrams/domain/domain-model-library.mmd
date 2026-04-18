@@ -1,0 +1,54 @@
+classDiagram
+    direction TB
+
+    class MusicLibrary {
+        <<AggregateRoot>>
+        List~Artist~ artists
+        List~Song~ songs
+        List~Track~ tracks
+    }
+
+    class Track {
+        TrackId id
+        EnergyLevel energyLevel
+        List~CuePoint~ cuePoints
+    }
+
+    class Song {
+        SongId id
+        String title
+        String audioFile
+    }
+
+    class Artist {
+        ArtistId id
+        String name
+    }
+
+    class CuePoint {
+        String label
+        Duration elapsedTime
+    }
+
+    class EnergyLevel {
+        <<enum>>
+        LOW
+        MEDIUM
+        HIGH
+    }
+
+    class SessionTrack {
+        <<runtime side>>
+    }
+
+    MusicLibrary "1" *-- "1..*" Track
+    MusicLibrary "1" *-- "1..*" Artist
+    MusicLibrary "1" *-- "1..*" Song
+
+    Track --> Song : playable version of
+    Track "1" *-- "0..*" CuePoint
+    Track --> EnergyLevel
+    Song --> Artist : performed by
+
+    SessionTrack ..> Track : derived from
+

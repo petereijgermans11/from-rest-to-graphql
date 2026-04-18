@@ -1,0 +1,30 @@
+graph TB
+    subgraph Clients
+        Web[Web App]
+        Mobile[Mobile App]
+        Dashboard[Dashboard]
+        REST[REST Client]
+    end
+
+    subgraph App["Spring Boot App"]
+        GQLCtrl["@Controller\n(GraphQL)"]
+        RESTCtrl["@RestController\nGET /api/sessions/current"]
+        MixSvc["MixSessionService"]
+        VoteSvc["CrowdVoteService\n(in-memory)"]
+        Repo["MixSessionRepository\nMusicLibraryLookup"]
+    end
+
+    subgraph Store["Persistence"]
+        DB[(PostgreSQL\nJSONB)]
+    end
+
+    Web -->|"{ status tracks { song { title audioFile } } }"| GQLCtrl
+    Mobile -->|"{ mixSession(id:$id) { status } }"| GQLCtrl
+    Dashboard -->|"crowdVoteTallyUpdated subscription"| GQLCtrl
+    REST -->|"GET /api/sessions/current"| RESTCtrl
+
+    GQLCtrl --> MixSvc
+    GQLCtrl --> VoteSvc
+    RESTCtrl --> MixSvc
+    MixSvc --> Repo
+    Repo --> DB

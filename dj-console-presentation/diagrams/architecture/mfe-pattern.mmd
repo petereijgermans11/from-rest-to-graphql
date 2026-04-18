@@ -1,0 +1,15 @@
+%% Conceptual — host, lazy remotes, shared API (LR keeps GraphQL in frame)
+flowchart LR
+    subgraph Host["Host shell"]
+        H["Routing · layout · context"]
+    end
+
+    R1["Remote A"]
+    R2["Remote B"]
+    API["GraphQL API<br/>shared contract"]
+
+    H -.->|lazy| R1
+    H -.->|lazy| R2
+    H -->|orchestrates| API
+    R1 -->|same schema| API
+    R2 -->|same schema| API

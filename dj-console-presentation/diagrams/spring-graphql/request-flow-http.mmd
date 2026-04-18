@@ -1,0 +1,17 @@
+sequenceDiagram
+    participant Client
+    participant HTTP as HTTP /graphql
+    participant Engine as ExecutionGraphQlService
+    participant Ctrl as @Controller
+    participant Svc as Service layer
+
+    note over Client,HTTP: Query / Mutation — HTTP POST
+    Client->>HTTP: POST /graphql { query }
+    HTTP->>Engine: execute(WebGraphQlRequest)
+    Engine->>Ctrl: @QueryMapping / @MutationMapping
+    Ctrl->>Svc: apply domain event
+    Svc-->>Ctrl: updated aggregate
+    Engine->>Ctrl: @SchemaMapping (nested fields)
+    Ctrl-->>Engine: resolved value
+    Engine-->>Client: { data: … }
+

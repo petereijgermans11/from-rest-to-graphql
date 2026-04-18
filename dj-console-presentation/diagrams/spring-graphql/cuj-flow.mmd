@@ -1,0 +1,31 @@
+%% Critical User Journey — DJ Console host (one slide, three phases)
+%% Read top-to-bottom: ① load ② subscribe ③ mutate + fan-out
+sequenceDiagram
+    participant UI as Host UI<br/>(Angular)
+    participant API as Spring GraphQL
+    participant DB as Domain / DB
+    participant Live as Live stream<br/>(WebSocket · graphql-ws)
+
+    rect rgb(42, 62, 52)
+    note over UI,DB: ① Boot — one HTTP query loads session + setlist
+    UI->>API: Query currentMixSession
+    API->>DB: Load active MixSession
+    DB-->>API: Aggregate (tracks, energy, …)
+    API-->>UI: JSON: full deck state
+    end
+
+    rect rgb(38, 52, 72)
+    note over UI,Live: ② Stay in sync — same fields as the query, no polling
+    UI-)Live: Subscribe mixSessionUpdated(id)
+    Live--)UI: First event = snapshot (current server state)
+    end
+
+    rect rgb(62, 52, 38)
+    note over UI,Live: ③ React — write on HTTP, updates also reach subscribers
+    UI->>API: Mutation (e.g. crowdCheered)
+    API->>DB: Apply event → persist
+    DB-->>API: Updated MixSession
+    API-->>UI: Mutation response (HTTP)
+    API-)Live: Publish same session object
+    Live--)UI: Push → UI treats like another snapshot
+    end

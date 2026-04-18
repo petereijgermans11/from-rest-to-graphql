@@ -1,0 +1,49 @@
+<div class="spotlight">
+  <div class="spotlight__badge">
+    NATIVE FEDERATION REMOTE — GraphQL Client Spotlight
+    <span class="spotlight__badge-hint">REST first · then same schema / tailored GraphQL clients</span>
+  </div>
+
+  <article class="spotlight__card spotlight__card--rest spotlight__card--rest-first">
+    <h3 class="spotlight__h">REST (legacy shape)</h3>
+    <ul class="spotlight__list">
+      <li><code>GET /api/sessions/current</code> — one URL, one JSON document for every client</li>
+      <li>Includes cue points, durations, IDs, audio file paths, crowd timeline, library size…</li>
+      <li>Projector-only clients still pay for DJ-only fields → classic over-fetching</li>
+    </ul>
+    <div class="spotlight__rest-fetch">
+      @if (restLoading()) {
+        <p class="spotlight__muted">Loading sample JSON…</p>
+      } @else if (restError()) {
+        <p class="spotlight__err">{{ restError() }}</p>
+        <button type="button" class="spotlight__retry" (click)="fetchRestSample()">Retry</button>
+      } @else {
+        <p class="spotlight__bytes">
+          Sample response size: <strong>{{ restBytes() ?? '—' }}</strong> bytes (UTF-8)
+        </p>
+        <pre class="spotlight__pre spotlight__pre--rest-json" tabindex="0">{{ restPreview() ?? '—' }}</pre>
+        <button type="button" class="spotlight__retry" (click)="fetchRestSample()">Refresh</button>
+      }
+    </div>
+  </article>
+
+  <blockquote class="spotlight__thesis">
+    <p>
+      Same schema, same endpoint, but each client gets exactly the data it needs — no more, no less.
+      That's the GraphQL argument in action.
+    </p>
+  </blockquote>
+
+  <div class="spotlight__queries">
+    <article class="spotlight__query-block">
+      <h3 class="spotlight__h">DJ Console — <code>CurrentMixSession</code></h3>
+      <pre class="spotlight__pre spotlight__pre--graphql">{{ currentMixSessionQuery }}</pre>
+    </article>
+    <article class="spotlight__query-block">
+      <h3 class="spotlight__h">Crowd Vote screen — <code>AudienceSession</code></h3>
+      <pre class="spotlight__pre spotlight__pre--graphql">{{ audienceSessionQuery }}</pre>
+    </article>
+  </div>
+
+  
+</div>

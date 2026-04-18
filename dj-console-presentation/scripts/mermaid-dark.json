@@ -1,0 +1,51 @@
+{
+  "theme": "dark",
+  "%%comment": "Presentation target: 16:9 widescreen 1920x1080. Rendered at 1600px wide via --width in render-diagrams.sh.",
+  "themeVariables": {
+    "background":          "#1e1e2e",
+    "mainBkg":             "#2a2a3e",
+    "nodeBorder":          "#6db33f",
+    "clusterBkg":          "#252535",
+    "clusterBorder":       "#6db33f",
+    "titleColor":          "#f0f0fa",
+    "edgeLabelBackground": "#1e1e2e",
+    "tertiaryColor":       "#252535",
+
+    "lineColor":           "#9090aa",
+    "textColor":           "#e8e8f0",
+    "labelTextColor":      "#e8e8f0",
+
+    "primaryColor":        "#2a2a3e",
+    "primaryTextColor":    "#f0f0fa",
+    "primaryBorderColor":  "#6db33f",
+    "secondaryColor":      "#252535",
+    "secondaryTextColor":  "#e8e8f0",
+    "secondaryBorderColor":"#9090aa",
+    "tertiaryTextColor":   "#e8e8f0",
+    "tertiaryBorderColor": "#9090aa",
+
+    "activationBorderColor":"#6db33f",
+    "activationBkgColor":   "#2a2a3e",
+    "sequenceNumberColor":  "#1e1e2e",
+    "actorBkg":             "#2a2a3e",
+    "actorBorder":          "#6db33f",
+    "actorTextColor":       "#f0f0fa",
+    "actorLineColor":       "#9090aa",
+    "signalColor":          "#e8e8f0",
+    "signalTextColor":      "#e8e8f0",
+    "noteBkgColor":         "#3a3a4e",
+    "noteTextColor":        "#e8e8f0",
+    "noteBorderColor":      "#6db33f",
+
+    "classText":            "#f0f0fa",
+    "fillType0":            "#2a2a3e",
+    "fillType1":            "#252535",
+    "fillType2":            "#2a3a2e",
+    "fillType3":            "#3a2a3e",
+    "fillType4":            "#2a2a3e",
+    "fillType5":            "#252535",
+    "fillType6":            "#2a3a2e",
+    "fillType7":            "#3a2a3e"
+  }
+}
+

@@ -1,0 +1,31 @@
+sequenceDiagram
+    participant Client
+    participant HTTP as HTTP Layer
+    participant Engine as ExecutionGraphQlService
+    participant Controller as @Controller
+    participant MixSvc as MixSessionService
+    participant VoteSvc as CrowdVoteService
+    participant MixPort as MixSessionUpdatePort
+    participant VotePort as CrowdVoteTallyPort
+    participant MixPub as MixSessionUpdatePublisher
+    participant VotePub as CrowdVoteTallyPublisher
+
+    note over Client,HTTP: Query / Mutation — HTTP POST /graphql
+    Client->>HTTP: POST /graphql
+    HTTP->>Engine: execute(RequestInput)
+    Engine->>Controller: @QueryMapping / @MutationMapping
+    Controller->>MixSvc: session mutations (crowdCheered, …)
+    MixSvc-->>Controller: MixSession
+    Controller->>VoteSvc: vote mutations (castCrowdVote, …)
+    VoteSvc-->>Controller: VoteTally
+    Controller-->>Engine: resolved value
+    note over Engine,Controller: @SchemaMapping resolvers called<br/>for each requested nested field
+    Engine-->>Client: JSON { data: ... }
+
+    note over Client,VotePub: Mutation side-effects → Subscriptions (output ports)
+    MixSvc--)MixPort: publish(MixSession)
+    MixPort--)MixPub: tryEmitNext(session)
+    MixPub--)Client: mixSessionUpdated via WebSocket
+    VoteSvc--)VotePort: publish(VoteTally)
+    VotePort--)VotePub: tryEmitNext(tally)
+    VotePub--)Client: crowdVoteTallyUpdated via WebSocket

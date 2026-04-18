@@ -1,0 +1,51 @@
+classDiagram
+    direction TB
+
+    class MixSession {
+        <<AggregateRoot>>
+        MixSessionId id
+        DiscJockey dj
+        getStatus() Status
+        applyEvent(CrowdEvent)
+    }
+
+    class MixSession.Status {
+        <<enum derived>>
+        WARM_UP
+        PEAK
+        COOL_DOWN
+    }
+
+    class SessionTrack {
+        <<session-local copy>>
+        TrackId sourceTrackId
+        Song song
+        EnergyLevel energyLevel
+    }
+
+    class DiscJockey {
+        String name
+        List~SessionTrack~ trackLibrary
+        findNextNewTrack(EnergyLevel, List)
+        findTrackByTitle(String)
+    }
+
+    class CrowdEvent {
+        <<sealed interface>>
+        CrowdCheered
+        CrowdEnergyDropped
+        DancefloorEmptied
+        DancefloorFilledUp
+        RequestFromAudienceReceived
+    }
+
+    MixSession "1" *-- "0..*" SessionTrack : tracks
+    MixSession "1" *-- "0..*" CrowdEvent : crowdEvents
+    MixSession --> DiscJockey : dj
+    MixSession ..> MixSession.Status : getStatus()
+
+    DiscJockey "1" o-- "0..*" SessionTrack : trackLibrary
+
+
+
+

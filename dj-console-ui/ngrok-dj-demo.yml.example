@@ -1,0 +1,15 @@
+# ── ngrok agent v2 config (works with many installs; ngrok v3 often still accepts this) ──
+#
+# Authtoken: run once globally:  ngrok config add-authtoken YOUR_TOKEN
+# (ngrok stores it in its own config; no need to put it here)
+#
+# Start (from dj-console-ui/, with API :8080 and `npm run start:public` on :4200):
+#   npm run ngrok
+#
+# v3-only YAML: see ngrok-dj-demo.v3.yml.example
+
+version: "2"
+tunnels:
+  ui:
+    proto: http
+    addr: 4200

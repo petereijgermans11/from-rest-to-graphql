@@ -1,0 +1,19 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background:
+    radial-gradient(ellipse 120% 80% at 10% 0%, rgba(0, 240, 200, 0.08), transparent 50%),
+    radial-gradient(ellipse 90% 60% at 90% 20%, rgba(255, 61, 90, 0.09), transparent 45%),
+    #07070c;
+  color: #f4efe6;
+}

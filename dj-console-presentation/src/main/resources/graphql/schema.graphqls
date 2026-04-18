@@ -1,0 +1,46 @@
+
+schema {
+  query: Query
+  mutation: Mutation
+}
+
+type Query {
+  # Convenience: the active/most-recent session (domain decides what "current" means)
+  currentMixSession: MixSession!
+  # Explicitly load a session by ID (UUID as ID scalar)
+  mixSession(id: ID!): MixSession!
+}
+
+type Mutation {
+  # Apply a crowd-cheered event to a specific session
+  crowdCheered(id: ID!): MixSession!
+}
+
+type MixSession {
+  id: ID!
+  status: MixSessionStatus!
+  tracks(last: Int): [SessionTrack!]!
+}
+
+enum MixSessionStatus {
+  WARM_UP
+  PEAK
+  COOL_DOWN
+}
+
+type SessionTrack {
+  id: ID!
+  song: Song!
+  energyLevel: Int!
+}
+
+type Song {
+  id: ID!
+  title: String!
+  artist: Artist!
+}
+
+type Artist {
+  id: ID!
+  name: String!
+}

@@ -1,0 +1,214 @@
+<div class="deck">
+  <header class="deck__header">
+    <div class="deck__brand">
+      <span class="deck__logo" aria-hidden="true">◈</span>
+      <div>
+        <h1 class="deck__title">DJ Console</h1>
+        <p class="deck__subtitle">Spring I/O · GraphQL in three operations</p>
+      </div>
+    </div>
+    <div class="deck__badges">
+      <span class="pill" [class.pill--on]="!loading()">Query</span>
+      <span class="pill pill--accent">Mutation</span>
+      <span class="pill" [class.pill--on]="streamConnected()">Subscription</span>
+    </div>
+  </header>
+
+  @if (loading()) {
+    <p class="deck__state">Loading session via <code>Query.currentMixSession</code>…</p>
+  } @else if (error()) {
+    <div class="deck__alert" role="alert">
+      <strong>GraphQL</strong>
+      {{ error() }}
+      <p class="deck__hint">
+        Start the API (<code>mvn spring-boot:run</code> in <code>dj-console-api</code>) and run this
+        app with <code>ng serve</code> so the proxy can reach <code>localhost:8080</code>.
+      </p>
+    </div>
+  } @else {
+    <section class="now" aria-live="polite">
+      <div class="now__vinyl" [class.now__vinyl--spin]="!!currentTrack()">
+        <div class="now__groove"></div>
+        <div class="now__label">
+          <span class="now__energy">{{ displayEnergyLevel() ?? '—' }}</span>
+          <span class="now__energy-label">energy</span>
+        </div>
+      </div>
+      <div class="now__meta">
+        <p class="now__kicker">Now on the floor</p>
+        <h2 class="now__track">{{ currentTrack()?.song?.title ?? '—' }}</h2>
+        <p class="now__artist">{{ currentTrack()?.song?.artist?.name ?? '' }}</p>
+        <p class="now__session">
+          Session <code>{{ session()?.id?.slice(0, 8) }}…</code> ·
+          <span class="status status--{{ displaySessionStatus().toLowerCase() }}">{{
+            displaySessionStatus()
+          }}</span>
+        </p>
+      </div>
+    </section>
+
+    <div class="now__player">
+      <audio #audioEl controls class="now__audio" aria-label="Deck playback"></audio>
+    </div>
+
+    <div class="actions">
+      <div class="event-actions">
+        <button
+          type="button"
+          class="btn btn--crowd"
+          [class.btn--active]="highlightedCrowdAction() === 'crowdCheered'"
+          (click)="cheer()"
+          [disabled]="cheering()"
+          title="Runs mutation crowdCheered"
+        >
+          Crowd cheered
+        </button>
+        <button
+          type="button"
+          class="btn btn--crowd"
+          [class.btn--active]="highlightedCrowdAction() === 'crowdEnergyDropped'"
+          (click)="crowdEnergyDropped()"
+          [disabled]="cheering()"
+          title="Runs mutation crowdEnergyDropped"
+        >
+          Energy dropped
+        </button>
+        <button
+          type="button"
+          class="btn btn--crowd"
+          [class.btn--active]="highlightedCrowdAction() === 'dancefloorEmptied'"
+          (click)="dancefloorEmptied()"
+          [disabled]="cheering()"
+          title="Runs mutation dancefloorEmptied"
+        >
+          Dancefloor emptied
+        </button>
+        <button
+          type="button"
+          class="btn btn--crowd"
+          [class.btn--active]="highlightedCrowdAction() === 'dancefloorFilledUp'"
+          (click)="dancefloorFilledUp()"
+          [disabled]="cheering()"
+          title="Runs mutation dancefloorFilledUp"
+        >
+          Dancefloor filled up
+        </button>
+      </div>
+      <div class="request-row">
+        <input
+          class="request-input"
+          [ngModel]="requestedTrackName()"
+          (ngModelChange)="requestedTrackName.set($event)"
+          placeholder="Audience request title"
+        />
+        <button
+          type="button"
+          class="btn btn--crowd"
+          [class.btn--active]="highlightedCrowdAction() === 'requestFromAudience'"
+          [class.btn--request-low]="highlightedCrowdAction() === 'requestFromAudience'"
+          (click)="requestFromAudience()"
+          [disabled]="cheering()"
+          title="Runs mutation requestFromAudience"
+        >
+          Request from audience
+          @if (highlightedCrowdAction() === 'requestFromAudience') {
+            <span class="btn__energy-note">energy: 5</span>
+          }
+        </button>
+      </div>
+      <div class="recovery-row">
+        <button
+          type="button"
+          class="btn btn--crowd btn--recovery"
+          [class.btn--active]="highlightedCrowdAction() === 'recovery'"
+          (click)="recover()"
+          [disabled]="cheering()"
+          title="Runs live recovery sequence (mutation applyRecovery)"
+        >
+          RECOVERY
+        </button>
+      </div>
+    </div>
+
+    <section class="setlist" aria-label="Recent tracks in this session">
+      <h3 class="setlist__title">Setlist ({{ trackCount() }} tracks)</h3>
+      <ol class="setlist__list">
+        @for (row of setlistRows(); track row.key) {
+          <li
+            class="setlist__item"
+            [class.setlist__item--selected]="row.t.id === selectedTrackId()"
+            (click)="selectTrack(row.t.id)"
+            title="Select track and load it in the player bar below"
+          >
+            <span class="setlist__energy">{{ row.t.energyLevel }}</span>
+            <span class="setlist__song">{{ row.t.song.title }}</span>
+            <span class="setlist__artist">{{ row.t.song.artist.name }}</span>
+          </li>
+        }
+      </ol>
+    </section>
+  }
+
+  <section class="learn" aria-labelledby="learn-heading">
+    <h2 id="learn-heading" class="learn__title">Why three GraphQL operation types?</h2>
+    <div class="learn__grid">
+      <article class="card">
+        <h3 class="card__op">Query</h3>
+        <p>
+          Read-only tree walk from the <code>Query</code> root — like a GET, but you choose the
+          shape. Here: <code>currentMixSession</code> loads the active mix.
+        </p>
+      </article>
+      <article class="card">
+        <h3 class="card__op">Mutation</h3>
+        <p>
+          Intentional writes with a typed contract. <code>crowdCheered(id)</code> applies a crowd
+          event and returns the new <code>MixSession</code> — same object graph as in queries.
+        </p>
+      </article>
+      <article class="card">
+        <h3 class="card__op">Subscription</h3>
+        <p>
+          A long-lived stream from <code>Subscription</code> over WebSocket (graphql-ws). The server
+          emits after each relevant change — ideal for live decks without polling.
+        </p>
+      </article>
+    </div>
+    <p class="learn__footer">
+      Schema is the contract between client and server — see
+      <a href="https://graphql.org/learn/schema/" rel="noopener noreferrer">GraphQL: Schemas and Types</a>.
+    </p>
+  </section>
+
+  <!-- ── GraphQL Client Spotlight — Native Federation remote ── -->
+  @if (spotlightComp()) {
+    <ng-container *ngComponentOutlet="spotlightComp()!" />
+  } @else {
+    <div class="mfe-defer-panel">
+      <button
+        type="button"
+        class="btn btn--spotlight"
+        (click)="loadSpotlight()"
+        [disabled]="spotlightLoading()"
+      >
+        {{ spotlightLoading() ? 'Loading remote…' : 'Load GraphQL Client Spotlight (Native Federation Remote)' }}
+      </button>
+    </div>
+  }
+
+  <!-- ── Crowd Vote — Native Federation remote ── -->
+  @if (audienceScreenComp()) {
+    <ng-container *ngComponentOutlet="audienceScreenComp()!" />
+  } @else {
+    <div class="mfe-defer-panel">
+      <button
+        type="button"
+        class="btn btn--mfe"
+        (click)="loadAudienceScreen()"
+        [disabled]="audienceLoading()"
+      >
+        {{ audienceLoading() ? 'Loading remote…' : 'Load Crowd Vote Live (Native Federation Remote)' }}
+      </button>
+    </div>
+  }
+</div>

@@ -1,0 +1,21 @@
+{
+  "name": "spring-graphql-reveal-deck",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "render:diagrams": "./scripts/render-diagrams.sh",
+    "check:diagrams": "node ./scripts/check-diagrams.mjs",
+    "copy:reveal": "./scripts/copy-reveal-assets.sh",
+    "copy:diagrams": "./scripts/copy-diagram-assets.sh",
+    "build:slides": "node ./scripts/build-slides.mjs",
+    "build": "npm run render:diagrams && npm run check:diagrams && npm run copy:reveal && npm run copy:diagrams && npm run build:slides",
+    "serve": "npx http-server ./reveal -p 8000 -c-1",
+    "present": "npm run build && npm run serve"
+  },
+  "devDependencies": {
+    "@mermaid-js/mermaid-cli": "^11.0.0",
+    "http-server": "^14.1.1",
+    "reveal.js": "^5.2.1"
+  }
+}

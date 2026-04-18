@@ -1,0 +1,665 @@
+Stop REST-ing: A Practical Journey to Spring GraphQL
+
+1. Introduction: REST & GraphQL in Today’s Architectures
+
+1.1 REST is not dead
+
+Still the default for:
+
+Service-to-service communication
+
+Simple CRUD APIs
+
+Stable domain boundaries
+
+Strengths:
+
+Mature tooling
+
+Caching semantics
+
+Clear resource modeling
+
+1.2 Where REST starts to hurt
+
+Endpoint explosion
+
+Over-fetching / under-fetching
+
+Versioning complexity
+
+Tight coupling between backend and frontend
+
+1.3 Why GraphQL enters the picture
+
+Not a universal replacement
+
+Ideal for:
+
+Backend-for-Frontend (BFF) patterns
+
+Complex UI data needs
+
+Multiple clients with different data shapes
+
+2. Concepts of GraphQL
+
+2.0 Introducing the Schema Definition Language (SDL)
+
+For developers, the Schema Definition Language (SDL) is the heart of GraphQL. It defines your API's types, queries, mutations, and subscriptions in a strongly typed, human-readable format. Think of SDL as the contract between client and server that ensures both sides agree on the data shape and operations.
+
+SDL is similar in spirit to OpenAPI schemas in REST but focuses on the shape of data and operations rather than HTTP endpoints. Understanding SDL is crucial for designing, evolving, and migrating your API schema effectively.
+
+Here is a simple example of SDL defining a query and a type:
+
+type Query {
+  user(id: ID!): User
+}
+
+type User {
+  id: ID!
+  name: String
+  email: String
+}
+
+In this example:
+
+type Query defines the entry points for fetching data.
+
+user is a query that takes a non-nullable id argument and returns a User type.
+
+type User defines the shape of the user object with fields and their types.
+
+By reading SDL, developers can understand what data can be requested and how to structure their queries. This schema-first approach contrasts with REST's multiple endpoints by providing a single, evolving contract.
+
+Mastering SDL helps you write precise schemas, migrate REST APIs effectively, and generate client code that aligns perfectly with your backend.
+
+Why SDL Matters for Developers
+
+Central Contract: SDL serves as the single source of truth that both client and server rely on, ensuring consistent communication.
+
+Schema-First Development: Developers design the API by defining the schema first, which drives implementation and client queries.
+
+Strong Typing: SDL enforces type safety, reducing runtime errors and improving tooling support.
+
+Clear API Evolution: Changes to the schema are explicit, helping manage versioning and backward compatibility.
+
+SDL Compared to REST/OpenAPI Schemas
+
+REST/OpenAPI focuses on HTTP endpoints, methods, and request/response formats.
+
+SDL focuses on the shape of data and operations exposed, abstracting away transport details.
+
+SDL enables clients to specify exactly what data they need, unlike fixed REST responses.
+
+What You Define in SDL
+
+Types: Objects, enums, scalars, interfaces, unions.
+
+Queries: Read operations clients can perform.
+
+Mutations: Write operations that change data.
+
+Subscriptions: Real-time data streams.
+
+Understanding SDL empowers developers to design flexible, efficient APIs and facilitates smoother migration from REST to GraphQL.
+
+2.1 Core building blocks
+
+Schema (SDL)
+
+Queries
+
+Mutations
+
+Subscriptions
+
+Resolvers
+
+2.2 Queries and Mutations Examples
+
+Queries Example
+
+query GetUser {
+  user(id: "123") {
+    id
+    name
+    email
+  }
+}
+
+This query fetches a user by ID and requests specific fields.
+
+Mutations Example
+
+mutation UpdateUserName {
+  updateUser(id: "123", name: "New Name") {
+    id
+    name
+  }
+}
+
+This mutation updates the user's name and returns the updated fields.
+
+2.3 Schema as the central contract
+
+Strong typing
+
+Single source of truth
+
+Clear contract between client and server
+
+2.4 Execution model
+
+Client defines response shape
+
+Field-level resolution
+
+Partial results + errors
+
+2.4 Resolvers and Data Fetchers
+
+Resolvers are the functions that connect your GraphQL schema to your backend data sources. They "resolve" the data for each field in a query or mutation by fetching it from databases, services, or other APIs.
+
+In Spring GraphQL, resolvers are typically implemented as methods annotated with @QueryMapping, @MutationMapping, or @SchemaMapping inside a @Controller class.
+
+What Resolvers Do:
+
+Map schema fields to backend logic
+
+Fetch or modify data
+
+Handle arguments and context
+
+Enable fine-grained control over data retrieval
+
+Example: Query Resolver
+
+@Controller
+public class UserController {
+
+    private final UserService userService;
+
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
+
+    @QueryMapping
+    public User user(@Argument String id) {
+        return userService.findById(id);
+    }
+}
+
+This resolver handles the user query by fetching a user by ID.
+
+Example: Mutation Resolver
+
+@Controller
+public class UserController {
+
+    private final UserService userService;
+
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
+
+    @MutationMapping
+    public User updateUserName(@Argument String id, @Argument String name) {
+        return userService.updateName(id, name);
+    }
+}
+
+This mutation updates the user's name.
+
+Example: Field Resolver with @SchemaMapping
+
+@Controller
+public class OrderController {
+
+    private final ItemService itemService;
+
+    @SchemaMapping(typeName = "Order", field = "items")
+    public List<Item> items(Order order) {
+        return itemService.findByOrderId(order.getId());
+    }
+}
+
+This resolver fetches the items field for an Order type.
+
+Data Fetchers are the underlying mechanism in GraphQL Java that execute the resolver logic. In Spring GraphQL, you usually don't write DataFetchers directly because the framework maps your annotated methods to DataFetchers automatically.
+
+However, understanding DataFetchers helps when you need custom behavior or want to optimize data fetching, such as batching or caching.
+
+Summary:
+
+Resolvers are your schema's bridge to backend data.
+
+Spring GraphQL uses annotations to simplify resolver implementation.
+
+DataFetchers are the lower-level GraphQL Java concept behind resolvers.
+
+Proper resolver design improves performance and maintainability.
+
+Would you like me to add examples of DataLoader usage or subscription resolvers next?
+
+3. Differences & Similarities Between REST and GraphQL
+
+3.1 Query API vs REST GET
+
+REST: fixed response shape
+
+GraphQL: client-defined selection sets
+
+REST: multiple endpoints
+
+GraphQL: single endpoint
+
+3.2 Mutations vs REST POST/PUT/PATCH
+
+Both change state
+
+GraphQL mutations:
+
+Explicit in schema
+
+Sequential execution
+
+Typed return values
+
+3.3 Subscriptions
+
+Real-time updates over WebSocket
+
+Compared with:
+
+Kafka
+
+Webhooks
+
+SSE
+
+Client-driven and schema-typed
+
+3.4 Error handling
+
+REST: HTTP status codes
+
+GraphQL: partial data + error array
+
+3.5 Versioning
+
+REST: v1, v2, v3…
+
+GraphQL: evolve schema without breaking clients
+
+4. Spring GraphQL in a Nutshell
+
+4.1 History
+
+Built on top of graphql-java
+
+Spring adds:
+
+Web layer integration
+
+Annotation-based controllers
+
+DataFetcher abstractions
+
+Testing support
+
+WebSocket support for subscriptions
+
+4.2 Architecture overview
+
+Schema files in src/main/resources/graphql/
+
+@Controller with:
+
+@QueryMapping
+
+@MutationMapping
+
+@SubscriptionMapping
+
+@SchemaMapping for field resolvers
+
+DataLoader integration
+
+GraphQlService and GraphQlSource under the hood
+
+4.3 Testing
+
+GraphQlTester for:
+
+Executing queries
+
+Asserting responses
+
+Schema-aware testing
+
+4.4 Comparison with Spring REST
+
+REST: @RestController, @GetMapping, etc.
+
+GraphQL: @Controller, @QueryMapping, etc.
+
+REST: endpoint-driven
+
+GraphQL: schema-driven
+
+5. Migration from Spring REST to Spring GraphQL
+
+5.1 When and why to migrate
+
+UI needs flexible data
+
+Multiple clients with different shapes
+
+Avoid endpoint explosion
+
+Reduce backend/frontend coupling
+
+5.2 When NOT to migrate
+
+Simple CRUD microservices
+
+Internal service-to-service APIs
+
+Highly cacheable resources
+
+Teams without schema discipline
+
+5.3 How to migrate
+
+Introduce a BFF layer
+
+Keep REST services behind GraphQL
+
+Add schema gradually
+
+Map existing services to resolvers
+
+Use DataLoaders to optimize joins
+
+Add subscriptions only when needed
+
+5.4 Concrete Migration Examples
+
+Example 1: Migrating a User Profile Endpoint
+
+Before (REST):
+
+@GetMapping("/users/{id}")
+public User getUser(@PathVariable String id) {
+    return userService.findById(id);
+}
+
+After (GraphQL):
+
+@QueryMapping
+public User user(@Argument String id) {
+    return userService.findById(id);
+}
+
+Notes: The REST endpoint /users/{id} becomes a GraphQL query user(id: String). The client can now request only the fields needed.
+
+Example 2: Combining Multiple REST Calls into One GraphQL Query
+
+Before (REST):
+
+@GetMapping("/orders/{id}")
+public Order getOrder(@PathVariable String id) {
+    return orderService.findById(id);
+}
+
+@GetMapping("/orders/{id}/items")
+public List<Item> getOrderItems(@PathVariable String id) {
+    return itemService.findByOrderId(id);
+}
+
+After (GraphQL):
+
+@QueryMapping
+public Order order(@Argument String id) {
+    return orderService.findById(id);
+}
+
+@SchemaMapping(typeName = "Order", field = "items")
+public List<Item> items(Order order) {
+    return itemService.findByOrderId(order.getId());
+}
+
+Notes: The client can fetch an order and its items in a single query, avoiding multiple REST calls.
+
+Example 3: Using DataLoader to Batch Requests
+
+Before (REST): Multiple calls to /users/{id} for each user in a list.
+
+After (GraphQL with DataLoader):
+
+public CompletableFuture<List<User>> users(List<String> ids) {
+    return userDataLoader.loadMany(ids);
+}
+
+Notes: DataLoader batches and caches requests to avoid N+1 query problems.
+
+Example 4: Adding a Subscription for Real-Time Updates
+
+Before (REST): Polling /events endpoint repeatedly.
+
+After (GraphQL):
+
+@SubscriptionMapping
+public Flux<Event> eventStream() {
+    return eventPublisher.getEvents();
+}
+
+Notes: Clients receive real-time updates via WebSocket without polling.
+
+5.5 Schema Migration Examples
+
+Example 1: Migrating REST API Schema to GraphQL SDL
+
+REST OpenAPI snippet:
+
+paths:
+  /users/{id}:
+    get:
+      summary: Get user by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        email:
+          type: string
+
+GraphQL SDL equivalent:
+
+type Query {
+  user(id: String!): User
+}
+
+type User {
+  id: ID!
+  name: String
+  email: String
+}
+
+Notes: The OpenAPI path and schema translate into a GraphQL query and type definition. Required parameters become non-null (!).
+
+Example 2: Using openapi-generator for GraphQL Client Code
+
+If you use openapi-generator for REST client code, you can generate GraphQL client code by configuring it for GraphQL or using plugins that support GraphQL.
+
+Example command:
+
+openapi-generator generate -i api.yaml -g graphql-java --library spring-boot -o generated-graphql-client
+
+Notes: This generates GraphQL client stubs based on your schema, similar to REST client generation.
+
+Example 3: Issues Without Schema-Generated Mapping
+
+If you do not use schema-generated mapping (e.g., manual mapping between REST DTOs and GraphQL types), you may face:
+
+Increased boilerplate code
+
+Risk of mismatched types or fields
+
+Harder to maintain consistency between schema and implementation
+
+More manual testing and validation
+
+Using schema-first or code generation tools helps keep client and server in sync and reduces errors.
+
+Example 1: Migrating a User Profile Endpoint
+
+Before (REST):
+
+@GetMapping("/users/{id}")
+public User getUser(@PathVariable String id) {
+    return userService.findById(id);
+}
+
+After (GraphQL):
+
+@QueryMapping
+public User user(@Argument String id) {
+    return userService.findById(id);
+}
+
+Notes: The REST endpoint /users/{id} becomes a GraphQL query user(id: String). The client can now request only the fields needed.
+
+Example 2: Combining Multiple REST Calls into One GraphQL Query
+
+Before (REST):
+
+@GetMapping("/orders/{id}")
+public Order getOrder(@PathVariable String id) {
+    return orderService.findById(id);
+}
+
+@GetMapping("/orders/{id}/items")
+public List<Item> getOrderItems(@PathVariable String id) {
+    return itemService.findByOrderId(id);
+}
+
+After (GraphQL):
+
+@QueryMapping
+public Order order(@Argument String id) {
+    return orderService.findById(id);
+}
+
+@SchemaMapping(typeName = "Order", field = "items")
+public List<Item> items(Order order) {
+    return itemService.findByOrderId(order.getId());
+}
+
+Notes: The client can fetch an order and its items in a single query, avoiding multiple REST calls.
+
+Example 3: Using DataLoader to Batch Requests
+
+Before (REST): Multiple calls to /users/{id} for each user in a list.
+
+After (GraphQL with DataLoader):
+
+public CompletableFuture<List<User>> users(List<String> ids) {
+    return userDataLoader.loadMany(ids);
+}
+
+Notes: DataLoader batches and caches requests to avoid N+1 query problems.
+
+Example 4: Adding a Subscription for Real-Time Updates
+
+Before (REST): Polling /events endpoint repeatedly.
+
+After (GraphQL):
+
+@SubscriptionMapping
+public Flux<Event> eventStream() {
+    return eventPublisher.getEvents();
+}
+
+Notes: Clients receive real-time updates via WebSocket without polling.
+
+These examples illustrate practical steps and code changes when migrating from Spring REST to Spring GraphQL, making the migration concrete and code-oriented.
+
+6. Demo: The DJ at the Party
+
+6.1 Domain model
+
+DJ
+
+MixSession
+
+Tracks
+
+Events:
+
+RequestFromAudienceReceivedEvent
+
+CrowdCheeredEvent
+
+DancefloorFilledUpEvent
+
+DancefloorEmptiedEvent
+
+6.2 What the demo illustrates
+
+Queries: get mix session, get tracks
+
+Mutations: add track, handle audience request
+
+Subscriptions: crowd events, dancefloor state changes
+
+6.3 Angular micro-frontend
+
+Real-time UI updates
+
+Client-driven data selection
+
+Reduced backend chatter
+
+7. Wrap-Up
+
+7.1 Key takeaways
+
+REST is still great — but not always enough
+
+GraphQL shines in BFF and UI-heavy scenarios
+
+Spring GraphQL feels “Spring-native”
+
+Migration can be incremental
+
+GraphQL isn’t magic — but it is fun
+
+7.2 Final message
+
+mutation UpdateApi {
+  updateApi(input: { tool: "GraphQL", joyLevel: "High" }) {
+    success
+    message
+  }
+}
+
+Use the right tool for the right job — and let GraphQL make your APIs lighter, more flexible, and more enjoyable to develop.

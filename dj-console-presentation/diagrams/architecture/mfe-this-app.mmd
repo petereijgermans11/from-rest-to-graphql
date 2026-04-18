@@ -1,0 +1,18 @@
+%% This app — Native Federation ports (arrow style matches mfe-pattern.mmd)
+flowchart LR
+    subgraph Host["dj-console-ui · :4200"]
+        direction TB
+        M["federation.manifest.json"]
+        L["loadRemoteModule(...)"]
+        M --> L
+    end
+
+    CV["mfe-crowd-vote<br/>:4201"]
+    SP["mfe-spotlight<br/>:4202"]
+    GQL["Spring GraphQL<br/>:8080"]
+
+    L -.->|lazy| CV
+    L -.->|lazy| SP
+    L -->|orchestrates| GQL
+    CV -->|same schema| GQL
+    SP -->|same schema| GQL

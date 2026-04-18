@@ -1,0 +1,10 @@
+sequenceDiagram
+    participant Svc as MixSessionServiceImpl
+    participant Pub as MixSessionUpdatePublisher<br/>(implements MixSessionUpdatePort)
+    participant Client
+
+    note over Svc,Client: Mutation side-effect → WebSocket push
+    Svc--)Pub: publish(session)
+    note over Pub: sink.tryEmitNext(session)
+    Pub--)Client: subscription event via WebSocket
+    note over Pub,Client: Flux filtered by session id<br/>Same MixSession shape as the query response

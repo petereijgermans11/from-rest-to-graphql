@@ -1,0 +1,138 @@
+<div class="audience">
+  <div class="audience__mfe-badge">
+    NATIVE FEDERATION REMOTE — Crowd Vote Live
+    <span class="audience__mfe-hint">(own Q + M + S · lighter GraphQL selection set · separate build)</span>
+  </div>
+
+  @if (!session()) {
+    <p class="audience__loading">Connecting to DJ session…</p>
+  } @else {
+    <div class="audience__now">
+      <p class="audience__kicker">NOW PLAYING</p>
+      <h1 class="audience__track">{{ currentTrack()?.song?.title ?? '—' }}</h1>
+      <p class="audience__artist">{{ currentTrack()?.song?.artist?.name ?? '' }}</p>
+      <span class="audience__status audience__status--{{ session()?.status?.toLowerCase() }}">
+        {{ session()?.status }}
+      </span>
+    </div>
+
+    <div class="audience__energy">
+      <span class="audience__energy-label">ENERGY</span>
+      <div class="audience__energy-track">
+        <div class="audience__energy-fill" [style.width.%]="energyPercent()"></div>
+      </div>
+      <span class="audience__energy-value">{{ currentTrack()?.energyLevel ?? 0 }}</span>
+    </div>
+
+    <div class="audience__votes">
+      <h2 class="audience__votes-title">
+        CROWD VOTE
+        @if (voteTallyConnected()) {
+          <span class="audience__live-dot"></span>
+        }
+        @if (voteCountdown() !== null) {
+          <span class="audience__countdown"> — playing winner in {{ voteCountdown() }}s</span>
+        }
+      </h2>
+
+      @if (error()) {
+        <p class="audience__error">{{ error() }}</p>
+      }
+
+      @if (voteBars().length) {
+        <div class="audience__vote-bars">
+          @for (bar of voteBars(); track bar.slot) {
+            <div class="audience__vote-item">
+              <span class="audience__vote-label">{{ bar.label }}</span>
+              <div class="audience__vote-track">
+                <div
+                  class="audience__vote-fill"
+                  [style.width.%]="bar.percent"
+                ></div>
+              </div>
+              <span class="audience__vote-count">{{ bar.votes }}</span>
+            </div>
+          }
+        </div>
+      } @else {
+        <p class="audience__no-votes">Waiting for votes…</p>
+      }
+
+      <div class="audience__actions">
+        <button
+          type="button"
+          class="audience__btn audience__btn--secondary"
+          (click)="resetCrowdVotes()"
+        >
+          Reset votes
+        </button>
+        <button
+          type="button"
+          class="audience__btn audience__btn--primary"
+          (click)="startPlayWinnerCountdown()"
+          [disabled]="voteCountdown() !== null"
+          title="After 10 seconds, applies applyCrowdVoteWinner"
+        >
+          Play winner in 10s
+        </button>
+        <button
+          type="button"
+          class="audience__btn audience__btn--secondary"
+          (click)="cancelWinnerCountdown()"
+          [disabled]="voteCountdown() === null"
+        >
+          Cancel countdown
+        </button>
+      </div>
+
+      @if (winnerPlayUrl()) {
+        <div class="audience__winner-play" role="region" aria-label="Winner track playback">
+          <p class="audience__winner-play-hint">
+            @if (winnerTrackTitle()) {
+              <strong>{{ winnerTrackTitle() }}</strong> ·
+            }
+            Tap the button once to hear the track in this browser.
+          </p>
+          <button type="button" class="audience__btn audience__btn--play" (click)="playWinningTrack()">
+            ▶ Play winning track
+          </button>
+        </div>
+      }
+    </div>
+
+    @defer (when showQrCodes()) {
+      <div class="audience__qr-section">
+        <h3 class="audience__qr-title">Scan to Vote</h3>
+        @if (voteQrRows().length === 0) {
+          <p class="audience__qr-waiting">
+            @if (ngrokPublic.baseUrl() === null) {
+              Waiting for ngrok HTTPS tunnel…
+            } @else {
+              Generating QR codes…
+            }
+          </p>
+        } @else {
+          <div class="audience__qr-row">
+            @for (row of voteQrRows(); track row.slot) {
+              <div class="audience__qr-card">
+                <img
+                  class="audience__qr-img"
+                  [src]="row.qrDataUrl"
+                  width="220"
+                  height="220"
+                  alt="Vote: {{ row.label }}"
+                />
+                <span class="audience__qr-label">{{ row.label }}</span>
+                <code class="audience__qr-url">{{ row.url }}</code>
+              </div>
+            }
+          </div>
+        }
+      </div>
+    } @placeholder {
+      <button class="audience__show-qr-btn" (click)="showQrCodes.set(true)">
+        Show Vote QR Codes
+      </button>
+    }
+  }
+</div>

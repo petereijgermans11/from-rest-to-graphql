@@ -1,0 +1,10 @@
+<div class="vote-page">
+  @if (loading()) {
+    <p>Recording your vote…</p>
+  } @else if (error()) {
+    <p class="vote-page__error" role="alert">{{ error() }}</p>
+  } @else if (done()) {
+    <p class="vote-page__ok">Thank you — your vote was counted.</p>
+    <p class="vote-page__hint">You can close this page.</p>
+  }
+</div>

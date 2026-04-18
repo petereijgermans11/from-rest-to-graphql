@@ -1,0 +1,122 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <title>Spring GraphQL — From REST to GraphQL</title>
+
+
+  <!-- Reveal core CSS -->
+  <link rel="stylesheet" href="vendor/reveal/reset.css">
+  <link rel="stylesheet" href="vendor/reveal/reveal.css">
+  <link rel="stylesheet" href="vendor/reveal/theme/spring-graphql.css">
+  <!-- Syntax highlighting: Monokai (dark, cinema-friendly) -->
+  <link rel="stylesheet" href="vendor/reveal/plugin/highlight/monokai.css">
+</head>
+<body>
+
+<!-- ── Act overlay — positioned outside .reveal so it floats above slides ── -->
+<div id="act-overlay">
+  <span id="act-label"></span>
+  <span id="act-counter"></span>
+</div>
+
+<div class="reveal">
+  <div class="slides">
+    <section
+      data-markdown="slides.md"
+      data-separator="\r?\n---\r?\n"
+      data-separator-vertical="\r?\n--\r?\n"
+      data-separator-notes="^Note:"
+    ></section>
+  </div>
+</div>
+
+<!-- Reveal core -->
+<script src="vendor/reveal/reveal.js"></script>
+
+<!-- Plugins -->
+<script src="vendor/reveal/plugin/markdown/markdown.js"></script>
+<script src="vendor/reveal/plugin/notes/notes.js"></script>
+<script src="vendor/reveal/plugin/highlight/highlight.js"></script>
+
+<script>
+  Reveal.initialize({
+    hash: true,
+    progress: true,
+    // Native 2D navigation — no remapping needed:
+    //   → / ←  moves between acts (horizontal columns)
+    //   ↓ / ↑  moves between slides within the current act (vertical rows)
+    //   ESC     opens the overview grid showing all acts and slides
+    //   Space   advances linearly through everything
+    plugins: [ RevealMarkdown, RevealNotes, RevealHighlight ]
+  });
+
+  // ── Act overlay logic ────────────────────────────────────────────────────
+  // HTML comments like <!-- data-act="2" data-act-title="Act 2 — First Demo"
+  // data-act-slide="3" data-act-total="5" --> are emitted by build-slides.mjs
+  // into each slide's content. We read them from the rendered section element.
+
+  function readAttr(section, attr) {
+    // Reveal wraps markdown slides in <section data-markdown-parsed>.
+    // Our HTML comments become comment nodes inside the section.
+    // We also check the section element's own dataset as a fallback
+    // (some Reveal versions hoist data-* from comments onto the section).
+    if (section && section.dataset[attr]) return section.dataset[attr];
+
+    // Walk comment nodes inside the section
+    if (section) {
+      for (const node of section.childNodes) {
+        if (node.nodeType === Node.COMMENT_NODE) {
+          const m = node.textContent.match(new RegExp(`${attr}="([^"]+)"`));
+          if (m) return m[1];
+        }
+      }
+    }
+    return null;
+  }
+
+  function updateOverlay() {
+    const slide    = Reveal.getCurrentSlide();
+    // For vertical stacks Reveal gives us the inner <section>;
+    // the outer parent carries the act-level data attributes.
+    const section  = slide?.parentElement?.tagName === 'SECTION'
+                     ? slide.parentElement
+                     : slide;
+
+    const actTitle    = readAttr(section, 'data-act-title')
+                     || readAttr(slide,   'data-act-title');
+    const actSlide    = readAttr(section, 'data-act-slide')
+                     || readAttr(slide,   'data-act-slide');
+    const actTotal    = readAttr(section, 'data-act-total')
+                     || readAttr(slide,   'data-act-total');
+    const interstitial= readAttr(section, 'data-interstitial')
+                     || readAttr(slide,   'data-interstitial');
+
+    const overlay  = document.getElementById('act-overlay');
+    const label    = document.getElementById('act-label');
+    const counter  = document.getElementById('act-counter');
+
+    if (!actTitle) {
+      overlay.style.display = 'none';
+      return;
+    }
+
+    overlay.style.display = 'flex';
+    label.textContent = actTitle;
+
+    if (interstitial === 'true' || !actSlide) {
+      counter.textContent = '';
+    } else {
+      counter.textContent = `${actSlide} / ${actTotal}`;
+    }
+  }
+
+  Reveal.on('slidechanged', updateOverlay);
+  Reveal.on('ready',        updateOverlay);
+</script>
+
+</body>
+</html>

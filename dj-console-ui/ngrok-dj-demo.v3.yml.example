@@ -1,0 +1,15 @@
+# ── ngrok agent v3 style (use if `ngrok start` rejects version: "2") ──
+#
+# Authtoken: run once globally:  ngrok config add-authtoken YOUR_TOKEN
+#
+# Start (from dj-console-ui/, with API :8080 and `npm run start:public` on :4200):
+#   npm run ngrok:v3
+#
+# If this format fails, run: ngrok config check && ngrok config upgrade
+# https://ngrok.com/docs/agent/config/v3/
+
+version: 3
+endpoints:
+  - name: ui
+    upstream:
+      url: http://127.0.0.1:4200
