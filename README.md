@@ -1,5 +1,4 @@
 
-
 This repository contains a **conference demo for Spring I/O 2026** illustrating
 migration from REST to GraphQL using a DJ Console domain.
 
